@@ -1,3 +1,9 @@
 <div>
+    <div style="padding-bottom: 10px;">
+    <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
+    <button id="groupByRequirement" type="button" class="btn btn-success" ng-click="groupRequirement()">Group By Requirement</button>
+    <button id="changeGrouping" type="button" class="btn btn-success" ng-click="groupByOwner()">Group By Owner</button>
+    <button id="groupByQualArea" type="button" class="btn btn-success" ng-click="groupByQualArea()">Group By Qual Area</button>
+    </div>
     <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid" ui-grid-resize-columns ui-grid-grouping></div>
 </div>
