@@ -1,4 +1,4 @@
-
+'use strict';
 /**
  * @ngdoc function
  * @name uiGridApp.controller:SortingCtrl

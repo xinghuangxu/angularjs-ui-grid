@@ -1,3 +1,4 @@
+'use strict';
 /**
  * @ngdoc function
  * @name uiGridApp.controller:SortingCtrl
@@ -49,6 +50,11 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
             customTreeAggregationFinalizerFn: function (aggregation) {
                 aggregation.rendered = aggregation.value;
             }
+        },
+        {
+            name: "link",
+            cellTemplate: '<a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-link"></span></a>',
+            cellClass: 'grid-align-center'
         }
 
     ];
@@ -100,7 +106,7 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
 
     $http.get('/data/test_strategies.json')
         .success(function (data) {
-            for (i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 data[i].ModifiedDate = new Date(data[i].ModifiedDate);
                 data[i].Requirement = Math.floor(Math.random() * (10 - 1)) + 1;
                 if(!data[i].Owner){

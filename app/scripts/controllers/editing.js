@@ -1,4 +1,4 @@
-
+'use strict';
 /**
  * @ngdoc function
  * @name uiGridApp.controller:SortingCtrl
@@ -53,7 +53,7 @@ angular.module('uiGridApp').controller('EditingCtrl', ['$scope', '$http', '$q', 
 
     $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
         .success(function(data) {
-            for(i = 0; i < data.length; i++){
+            for(var i = 0; i < data.length; i++){
                 data[i].registered = new Date(data[i].registered);
             }
             $scope.gridOptions.data = data;
