@@ -21,8 +21,7 @@ angular
         'ui.grid.edit',
         'ui.grid.rowEdit',
         'ui.grid.cellNav',
-        'ui.grid.grouping',
-        'addressFormatter'
+        'ui.grid.grouping'
     ])
     .config(function ($routeProvider) {
         $routeProvider

@@ -6,18 +6,20 @@
  * # SortingCtrl
  * Controller of the sorting of the grids
  */
-angular.module('addressFormatter', []).filter('address', function () {
-    return function (input) {
-        return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
-    };
-});
-
 angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$interval', 'uiGridGroupingConstants', function ($scope, $http, $q, $interval, uiGridGroupingConstants) {
+
+    // GridOptions configuration
     $scope.gridOptions = {
         enableFiltering: true,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
         }
+    };
+
+    $scope.gridOptions.onRegisterApi = function (gridApi) {
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
     };
 
     $scope.gridOptions.columnDefs = [
@@ -40,7 +42,7 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
         {name: 'Type', displayName: 'type'},
         {name: 'QualArea', displayName: 'qual area'},
         {name: 'ImpactArea', displayName: 'impact area'},
-        //{name: 'ModifiedDate', displayName: 'modified date', type: 'date', cellFilter: 'date:"yyyy-MM-dd"'},
+        //{name: 'ModifiedDate', displayName: 'modified date', type: 'date', cellFilter: 'date:"yyyy-MM-dd"'}, //This column shows type date
 
         {
             name: 'Scope',
@@ -54,11 +56,12 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
         {
             name: "link",
             cellTemplate: '<a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-link"></span></a>',
-            cellClass: 'grid-align-center'
+            cellClass: 'grid-align-center' //This is to center the grid, see styles/main.scss
         }
 
     ];
 
+    // Enable the grouping features
     $scope.groupByOwner = function() {
         $scope.gridApi.grouping.clearGrouping();
         $scope.gridApi.grouping.groupColumn('Boxcar');
@@ -90,20 +93,12 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
 
         // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
         $interval(function () {
-            if (rowEntity.gender === 'male') {
-                promise.reject();
-            } else {
                 promise.resolve();
-            }
         }, 3000, 1);
     };
 
-    $scope.gridOptions.onRegisterApi = function (gridApi) {
-        //set gridApi on scope
-        $scope.gridApi = gridApi;
-        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-    };
 
+    // Retrieve the sample data under data folder and add in some fake data fields
     $http.get('/data/test_strategies.json')
         .success(function (data) {
             for (var i = 0; i < data.length; i++) {
@@ -117,17 +112,3 @@ angular.module('uiGridApp').controller('DemoCtrl', ['$scope', '$http', '$q', '$i
             $scope.gridOptions.data = data;
         });
 }]);
-    //.filter('mapOwner', function() {
-    //    var genderHash = {
-    //        1: 'leonx',
-    //        2: 'dstein'
-    //    };
-    //
-    //    return function(input) {
-    //        if (!input){
-    //            return '';
-    //        } else {
-    //            return genderHash[input];
-    //        }
-    //    };
-    //});
